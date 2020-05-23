@@ -1,0 +1,197 @@
+@import "assets/useful"
+
+@font-face
+    font-family: "Open Sans"
+    src: url("../fonts/OpenSans-Regular.woff2") format("woff2"), url("../fonts/OpenSans-Regular.woff") format("woff")
+
+$background-gray: #EDEDED
+$header-blue: #22344C
+$li-blue: #6A94D5
+$focused-blue: #38537E
+$font-white: #F1F1F1
+$font-black: #090909
+$good-green: #739c3e
+$bad-red: #b44346
+$softkey-gray: #777777
+$font: "Open Sans", sans-serif
+
+@mixin main-content
+    @include wh(auto, calc(100% - 58px))
+    @include scroll(none)
+
+    &.hidden
+        display: none !important
+
+@mixin paddingContainer
+    &-container
+        padding: 10px 0
+        @include moveChildren
+
+        &:not(:first-child)
+            margin-top: -10px
+
+@mixin input
+    display: block
+    box-sizing: border-box
+    padding: 0 0 0 10px
+    @include wh(calc(100% - 20px), 36px)
+    @include paddingContainer
+
+    &#focused
+        color: $font-white
+
+html, body
+    font: 400 17px $font
+    color: $font-white
+    background: $background-gray
+    @include scroll(none)
+    @include body
+    @include word
+
+#focused
+    outline: none
+    background: $focused-blue
+    color: $font-white
+
+.hidden
+    display: none
+
+.header
+    background: $header-blue
+    @include wh(100%, 28px)
+
+    &__text
+        height: 100%
+        font: 300 17px $font
+        margin: 0
+        text-align: center
+        @include moveChildren
+
+.skills, .records
+    @include main-content
+
+    &__list
+        @include scroll(vertical)
+        @include wh
+        @include listlesList
+
+    &__element
+        box-sizing: border-box
+        padding: 0 10px
+        text-align: center
+        font-weight: 400
+        background: $li-blue
+        border-bottom: $header-blue 1px solid
+        @include scroll(none)
+        @include wh(100%, 60px)
+        @include moveChildren
+
+.edit-skill, .edit-record, .add-skill, .add-record
+    @include scroll(vertical)
+    @include main-content
+
+    &__button, &__input
+        @include input
+
+.edit-record, .add-record
+    color: $font-black
+    font: 400 12px $font
+
+    &__input-hours, &__input-minutes
+        width: calc(50% - 26px)
+
+.records
+
+    &__chart
+
+        &-pick
+            background: $li-blue
+            border-right: $header-blue 1px solid
+            border-bottom: $header-blue 1px solid
+            padding: 0 5px
+            flex: 1
+            @include word(false)
+
+            &:last-child
+                border-right: none
+
+            &er
+                display: flex
+
+    &__chart, &__legend
+        box-sizing: border-box
+        text-align: center
+        font-weight: 400
+        background: $li-blue
+        border-bottom: $header-blue 1px solid
+
+        &-container
+            display: grid
+
+.info
+    @include main-content
+
+    &__text
+        display: block
+        box-sizing: border-box
+        margin: 0px
+        padding: 5px
+        line-height: 1.4rem
+        color: $font-black
+        @include word(false)
+        @include wh
+
+        &-container
+            @include wh
+
+.error
+    background: $bad-red
+    transform: translateY(-30px)
+    height: 75px !important
+    box-sizing: border-box
+    padding: 5px
+    position: fixed
+    bottom: 0
+    transition: transform 0.4s ease-in-out
+    color: $font-white
+    @include word(true)
+    @include wh
+    @include moveChildren
+
+    &.hidden
+        transition: transform 0.4s ease-in-out
+        transform: translateY(45px)
+
+.softkey
+    box-sizing: border-box
+    color: $font-black
+    padding: 5px
+    grid-gap: 5px
+    display: flex
+    height: 30px
+    width: 100%
+    bottom: 0
+    position: relative
+    background: $softkey-gray
+
+    &__left, &__center, &__right
+        height: 100%
+        display: flex
+        align-items: center
+
+    &__left
+        font: 600 14px $font
+        flex: 3
+        justify-content: flex-start
+
+    &__center
+        font-weight: 700
+        flex: 4
+        justify-content: center
+
+    &__right
+        font: 600 14px $font
+        flex: 3
+        font-size: 14px
+        font-weight: 600
+        justify-content: flex-end

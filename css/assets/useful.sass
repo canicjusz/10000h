@@ -1,0 +1,91 @@
+@mixin moveChildren($x: center, $y: center)
+
+    display: flex
+
+    @if $x == start
+        justify-content: flex-start
+    @else if $x == end
+        justify-content: flex-end
+    @else if $x == even
+        justify-content: space-evenly
+    @else if $x == uneven
+        justify-content: space-around
+    @else if $x == between
+        justify-content: space-between
+    @else
+        justify-content: $x
+
+    @if $y == start
+        align-items: flex-start
+    @else if $y == end
+        align-items: flex-end
+    @else
+        align-items: $y
+
+@mixin centerSelfGrid($x: true, $y: true)
+
+    @if $x
+        justify-self: center
+
+    @if $y
+        align-self: center
+
+@mixin centerSelfNoGrid($x: true, $y: true)
+
+    display: block
+    position: relative
+
+    @if $x
+        left: 50%
+        transform: translateX(-50%)
+
+    @if $y
+        top: 50%
+        transform: translateY(-50%)
+
+@mixin word($break: true)
+
+    @if $break
+        word-wrap: break-word
+        word-break: break-all
+        overflow-wrap: break-all
+    @else
+        word-break: keep-all
+        word-wrap: normal
+        overflow-wrap: normal
+
+@mixin wh($x: 100%, $y: 100%)
+
+    width: $x
+    height: $y
+
+@mixin zindex($elementsArr...)
+
+    @for $i from 0 to length($elementsArr)
+        @each $element in nth($elementsArr, $i + 1)
+            .#{$element}
+                z-index: #{$i + 1}
+
+@mixin scroll($direction: both)
+
+    @if $direction == vertical
+        overflow-x: hidden
+        overflow-y: auto
+    @else if $direction == horizontal
+        overflow-x: auto
+        overflow-y: hidden
+    @else if $direction == both
+        overflow: auto
+    @else if $direction == none
+        overflow: hidden
+
+@mixin body
+    position: relative
+    top: 0
+    margin: 0
+    @include wh
+
+@mixin listlesList
+    list-style: none
+    margin: 0
+    padding: 0

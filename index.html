@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>10000 Hours</title>
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="css/style.css">
+        <script type="text/javascript" src="js/script.js" defer></script>
+    </head>
+    <body>
+        <header class="header">
+			<h1 class="header__text">SKILLS</h1>
+        </header>
+        <div class="skills visible">
+            <ul class="skills__list">
+                <div class="skills__element-container" tabIndex="1">
+                    <li class="add-skill-element skills__element" tabIndex="1">Create new skills</li>
+                </div>
+            </ul>
+        </div>
+        <div class="add-skill hidden">
+            <div class="add-skill__input-container">
+                <input type="text" class="add-skill__input" placeholder="Enter skill name" tabIndex="1">
+            </div>
+            <div class="add-skill__button-container">
+                <button class="add-skill__button add-skill__button-add" tabIndex="1">Add skill</button>
+            </div>
+            <div class="add-skill__button-container">
+                <button class="add-skill__button add-skill__button-cancel" tabIndex="1">Cancel</button>
+            </div>
+        </div>
+        <div class="edit-skill hidden">
+            <div class="edit-skill__input-container">
+                <input type="text" class="edit-skill__input" placeholder="Enter skill name" tabIndex="1">
+            </div>
+            <div class="edit-skill__button-container">
+                <button class="edit-skill__button edit-skill__button-save" tabIndex="1">Save changes</button>
+            </div>
+            <div class="edit-skill__button-container">
+                <button class="edit-skill__button edit-skill__button-remove" tabIndex="1">Remove skill</button>
+            </div>
+            <div class="edit-skill__button-container">
+                <button class="edit-skill__button edit-skill__button-cancel" tabIndex="1">Cancel</button>
+            </div>
+        </div>
+        <div class="records hidden">
+            <ul class="records__list">
+                <div class="records__chart-picker" tabIndex="1">
+                    <span class="records__chart-pick records__chart-pick-week" tabIndex="1">7 days</span>
+                    <span class="records__chart-pick records__chart-pick-month" tabIndex="1">30 days</span>
+                    <span class="records__chart-pick records__chart-pick-year" tabIndex="1">365 days</span>
+                    <span class="records__chart-pick records__chart-pick-all-time" tabIndex="1">All time</span>
+                </div>
+                <div class="records__chart-container" tabIndex="1">
+                    <canvas class="records__chart" height="140px" tabIndex="1"></canvas>
+                </div>
+                <div class="records__legend-container" tabIndex="1">
+                    <canvas class="records__legend" tabIndex="1"></canvas>
+                </div>
+                <div class="records__element-container" tabIndex="1">
+                    <li class="add-record-element records__element" tabIndex="1">Create new record</li>
+                </div>
+            </ul>
+        </div>
+        <div class="add-record hidden">
+            <div class="add-record__input-container">
+                <input type="number" class="add-record__input-hours" placeholder="Insert hours" tabIndex="1" value="0">h&nbsp;
+                <input type="number" class="add-record__input-minutes" placeholder="Insert minutes" tabIndex="1" value="0">m
+            </div>
+            <div class="add-record__button-container">
+                <button class="add-record__button add-record__button-add" tabIndex="1">Add record</button>
+            </div>
+            <div class="add-record__button-container">
+                <button class="add-record__button add-record__button-cancel" tabIndex="1">Cancel</button>
+            </div>
+        </div>
+        <div class="edit-record hidden">
+            <div class="edit-record__input-container">
+                <input type="number" class="edit-record__input-hours" placeholder="Insert hours" tabIndex="1" value="0">h
+                <input type="number" class="edit-record__input-minutes" placeholder="Insert minutes" tabIndex="1" value="0">m
+            </div>
+            <div class="edit-record__button-container">
+                <button class="edit-record__button edit-record__button-save" tabIndex="1">Save changes</button>
+            </div>
+            <div class="edit-record__button-container">
+                <button class="edit-record__button edit-record__button-remove" tabIndex="1">Remove record</button>
+            </div>
+            <div class="edit-record__button-container">
+                <button class="edit-record__button edit-record__button-cancel" tabIndex="1">Cancel</button>
+            </div>
+        </div>
+        <div class="info hidden">
+			<div class="info__text-container" tabIndex="1">
+				<p class="info__text" tabIndex="1">
+					In book Outliers, Malcolm Gladwell popularized the idea that it requires 10000 hours of concentrated practice in order to possess a world-class skill in something. This app was created to help you reach 10000 hours milestone.
+				</p>
+			</div>
+		</div>
+        <div class="error hidden"></div>
+        <footer class="softkey">
+			<div class="softkey__left"></div>
+			<div class="softkey__center"></div>
+			<div class="softkey__right"></div>
+		</footer>
+    </body>
+</html>
