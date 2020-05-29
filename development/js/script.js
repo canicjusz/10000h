@@ -160,8 +160,8 @@ window.addEventListener('DOMContentLoaded', _=>{
 		showAddRecord(){
 			headerText.textContent = 'ADD RECORD'
 			this.currObj = skillsClass.copy[this.currSkillKey]
-			this.add.inputs.h.value = "0";
-			this.add.inputs.m.value = "0";
+			this.add.inputs.h.value = '';
+			this.add.inputs.m.value = '';
 			history.pushState({el: 'addRecord'}, 'addRecord');
 			hideShow(this.records.div, this.add.div);
 			focusElement(this.add.inputs.h);
@@ -191,10 +191,8 @@ window.addEventListener('DOMContentLoaded', _=>{
 		showEditRecord(){
 			headerText.textContent = 'EDIT RECORD'
 			this.currObj = skillsClass.copy[this.currSkillKey]
-			console.log(this.edit.inputs.h.value, this.currText[0])
 			this.edit.inputs.h.value = this.currText[0];
 			this.edit.inputs.m.value = this.currText[1];
-			console.log(this.edit.inputs.h.value, this.currText[0])
 			history.pushState({el: 'editRecord'}, 'editRecord');
 			hideShow(this.records.div, this.edit.div);
 			focusElement(this.edit.inputs.h);
@@ -203,8 +201,6 @@ window.addEventListener('DOMContentLoaded', _=>{
 		changeRecord(){
 			let store = db.transaction(['skills'], 'readwrite').objectStore('skills'), h = Number(this.edit.inputs.h.value), m = Number(this.edit.inputs.m.value), currIndex = this.recordsArray.findIndex(el => el.date === fuckingParse() && el.h === this.currText[0] && el.m === this.currText[1])
 			this.recordsArray[currIndex] = {date: fuckingParse(), h, m}
-			console.log('x')
-			console.log(fuckingParse(), this.recordsArray, this.currText[0], this.currText[1])
 			let req = store.put(skillsClass.copy[this.currSkillKey], this.currSkillKey)
 			req.onsuccess = _=>{
 				this.el.textContent = `${h}h ${m}m`
@@ -227,10 +223,10 @@ window.addEventListener('DOMContentLoaded', _=>{
 
 		watchInputs(){
 			for(let l = this.hInputs.length; l--;){
-				this.hInputs[l].addEventListener('keyup', _=>{limitInputs(this.hInputs[l], 23 - chartsClass.timeToday.h + recordsClass.currText[0])})
+				this.hInputs[l].addEventListener('keyup', e=>{limitInputs(this.hInputs[l], 23 - chartsClass.timeToday.h + recordsClass.currText[0])})
 			}
 			for(let l = this.mInputs.length; l--;){
-				this.mInputs[l].addEventListener('keyup', _=>limitInputs(this.mInputs[l], 59 - chartsClass.timeToday.m + recordsClass.currText[1]))
+				this.mInputs[l].addEventListener('keyup', e=>{limitInputs(this.mInputs[l], 59 - chartsClass.timeToday.m + recordsClass.currText[1])})
 			}
 		}
 
@@ -252,12 +248,10 @@ window.addEventListener('DOMContentLoaded', _=>{
 			let d = new Date(), month = d.getMonth(), year = d.getFullYear(), firstDay = fuckingParse(year, month, 1), firstDayCopy = firstDay,
 				lastDay = fuckingParse(year, month + 1, 0), sections = {}, weeks = {},
 				firstWeekDay = firstDay - (new Date(firstDay).getDay() * day), lastWeekDay = firstWeekDay + (6 * day)
-			console.log(d.getDay(), new Date(firstDay))
 			while(firstDayCopy <= lastDay){
 				if(lastDay < lastWeekDay){
 					lastWeekDay = lastDay
 				}
-				console.log(lastWeekDay)
 				let weeksKey = new Date(firstDayCopy).toLocaleDateString('en', options) + '-' + new Date(lastWeekDay).toLocaleDateString('en', options)
 				sections[lastWeekDay] = {}
 				weeks[weeksKey] = {h: 0, m: 0}
@@ -267,7 +261,6 @@ window.addEventListener('DOMContentLoaded', _=>{
 			let ArrToSend = [...this.recordsArray], sectionsKeys = Object.keys(sections), weeksKeys = Object.keys(weeks), firstIndex = ArrToSend.findIndex(el => el.date >= firstDay), sliced = firstIndex > -1 ? this.recordsArray.slice(firstIndex) : []
 			for(let l = sliced.length; l--;){
 				let element = sliced[l], keyIndex = sectionsKeys.findIndex(el => el >= element.date), key = weeksKeys[keyIndex]
-				console.log(weeks, -weeksKeys, keyIndex, new Date(element.date), sectionsKeys)
 				weeks[key].h += element.h
 				weeks[key].m += element.m
 			}
@@ -284,7 +277,6 @@ window.addEventListener('DOMContentLoaded', _=>{
 				months[monthName].h += element.h
 				months[monthName].m += element.m
 			}
-			console.log(months)
 			chartsClass.vals = months
 			chartsClass.drawProportions()
 		}
@@ -297,7 +289,6 @@ window.addEventListener('DOMContentLoaded', _=>{
 				all.allTime.m += element.m
 			}
 			chartsClass.vals = all
-			console.log(all)
 			chartsClass.drawProportions()
 		}
 	}
@@ -350,11 +341,9 @@ window.addEventListener('DOMContentLoaded', _=>{
 		}
 
 		drawProportions(){
-			console.log(this.c1.w, this.c1.h)
 			let keys = Object.keys(this.vals), totalM = 0, totalH = 0, lastDegree = 0
 			for(let l = keys.length; l--;){
 				let key = keys[l]
-				console.log(this.vals[key].h, this.vals[key].m)
 				totalM += this.vals[key].m
 				totalH += this.vals[key].h
 			}
@@ -362,10 +351,8 @@ window.addEventListener('DOMContentLoaded', _=>{
 			this.c1.ctx.clearRect(0, 0, this.c1.w, this.c1.h)
 			this.c1.ctx.lineWidth = 10
 			if(total > 0){
-				console.log('xD')
 				for(let l = keys.length; l--;){
 					let key = keys[l], currVal = this.vals[key], currLeftM = currVal.m % 60, currLeftH = currVal.h + Math.floor(currVal.m / 60), currTotal = currLeftH + (currLeftM / 60), to = lastDegree + (Math.PI * 2 * currTotal / total)
-					console.log(to)
 					this.c1.ctx.strokeStyle = this.colors[l]
 					this.c1.ctx.beginPath()
 					this.c1.ctx.arc(this.c1.w / 2, 70, 60, lastDegree, to)
@@ -383,64 +370,20 @@ window.addEventListener('DOMContentLoaded', _=>{
 		drawLegend(){
 			let keys = Object.keys(this.vals), length = keys.length, height = this.c2.maxH
 			this.c2.ctx.clearRect(0, 0, this.c2.w, this.c2.h)
-			this.c2.el.height = length > 8 && height < 240 ? (8*20) + 10 : (length*20) + 10
+			this.c2.el.height = length > 8 && height < 200 ? (8*18) + 12 : (length*18) + 12
 			this.c2.ctx.font = "12px Arial"
 			for(let l = length; l--;){
-				let key = keys[l], x = 10, y = (l*20) + 8, currVal = this.vals[key], currObj = this.vals[key], currLeftM = currVal.m % 60, currLeftH = currVal.h + Math.floor(currLeftM / 60)
-				if((y + 15) > height && height < 240){
+				let key = keys[l], x = 10, y = (l*18) + 8, currVal = this.vals[key], currObj = this.vals[key], currLeftM = currVal.m % 60, currLeftH = currVal.h + Math.floor(currLeftM / 60)
+				if((y + 15) > height && height < 200){
 					x = 140
-					y -= 140
+					y -= 144
 				}
 				this.c2.ctx.fillStyle = this.colors[l]
-				console.log(currObj, this.colors[l], l)
 				this.c2.ctx.fillRect(x, y, 15, 15)
 				this.c2.ctx.fillStyle = '#fff'
 				this.c2.ctx.fillText(`${key}: ${currLeftH}h, ${currLeftM}m`, x + 20, y + 12)
 			}
 		}
-		// drawLines(){
-		// 	this.ctx.font = "12px Arial";
-		// 	this.ctx.fillStyle = "#111"
-		// 	this.ctx.lineWidth = 1
-		// 	for(let l = this.lines.length; l--;){
-		// 		this.ctx.fillRect(20, this.lines[l], this.c.w-30, 1)
-		// 	}
-		// }
-
-		// callBottom(){
-		// 	let keys = Object.keys(this.vals), space = (this.c.w-25) / (keys.length-1)
-		// 	for(let l = keys.length - 1; l--;){
-		// 		this.drawBottom(keys[l], space*l)
-		// 	}
-		// 	this.drawBottom(keys[keys.length-1], 190)
-		// }
-
-		// drawBottom(text, x){
-		// 	let freeW = this.ctx.measureText(text).width+x-210
-		// 	if(freeW > 0)
-		// 		this.ctx.fillText(text, x+10-freeW, 195);
-		// 	else
-		// 		this.ctx.fillText(text, x+10, 195);	
-		// 	this.ctx.fillRect(x+20, 180, 1, 5)
-		// }
-
-		// callLeft(){
-		// 	this.ctx.font = "11px Arial";
-		// 	this.max = Math.max(...Object.values(this.vals))
-		// 	if(this.max>1000)
-		// 		this.max = Math.ceil(this.max / 1000) * 1000
-		// 	let third = this.max/3
-		// 	for(let l = this.lines.length - 1; l--;){
-		// 		console.log(third * l)
-		// 		this.drawLeft(Math.round(third * l), this.lines[l])
-		// 	}
-		// 	this.drawLeft(this.max, this.lines[this.lines.length-1])
-		// }
-
-		// drawLeft(num, y){
-		// 	let text = num > 1000 ? Math.round(num / 100) / 10 + 'k' : num
-		// 	this.ctx.fillText(text, 0, y + 4)
-		// }
 	}
 
 	class Softkeys{
@@ -452,7 +395,6 @@ window.addEventListener('DOMContentLoaded', _=>{
 		}
 
 		setSoftkeys(classes){
-			console.log(classes)
 			switch(classes){
 				case 'add-skill-element skills__element':
 					this.changeSoftkeys('Info', 'SELECT', '')
@@ -475,9 +417,9 @@ window.addEventListener('DOMContentLoaded', _=>{
 				case 'edit-skill__button edit-skill__button-cancel':
 				case 'add-record add-record__button-add':
 				case 'add-record add-record__button-edit':
-				case 'edit-record edit-record__button-save':
-				case 'edit-record edit-record__button-remove':
-				case 'edit-record edit-record__button-cancle':
+				case 'edit-record__button edit-record__button-save':
+				case 'edit-record__button edit-record__button-remove':
+				case 'edit-record__button edit-record__button-cancel':
 				case 'records__chart-pick records__chart-pick-week':
 				case 'records__chart-pick records__chart-pick-month':
 				case 'records__chart-pick records__chart-pick-year':
@@ -491,7 +433,7 @@ window.addEventListener('DOMContentLoaded', _=>{
 					this.changeSoftkeys('', '', '')
 				break;
 				case 'records__element':
-					this.changeSoftkeys('', 'SELECT', 'Edit')
+				  this.changeSoftkeys('', '', 'Edit')
 				break;
 			}
 		}
@@ -508,7 +450,6 @@ window.addEventListener('DOMContentLoaded', _=>{
 				break;
 				case 'add-skill-element skills__element':
 				case 'skills__element':
-					console.log('x')
 					showInfo()
 				break;
 			}
@@ -647,6 +588,7 @@ window.addEventListener('DOMContentLoaded', _=>{
 	//handle keyDowns and call appropriate function
 	function handleKeydown(e){
 		let element = e.target
+		console.log(element.getAttribute('type'), element)
 		switch(e.key){
 			case 'ArrowUp':
 				e.preventDefault();
@@ -730,13 +672,16 @@ window.addEventListener('DOMContentLoaded', _=>{
 		el.focus();
 		el.id = 'focused';
 		softkeysClass.setSoftkeys(el.className);
-		console.log(parent.getBoundingClientRect(), parent.parentElement.scrollTop+parent.getBoundingClientRect().y - 88)
 		parent.parentElement.scrollTop+=parent.getBoundingClientRect().y - 28
+		if(el.tagName === 'INPUT'){
+			let val = el.value
+			el.value = ''
+			el.value = val
+		}
 	}
 
 	//shows error message and hides it after 3s
 	function showError(message){
-		console.log(errorAlert)
 		if(message !== errorAlert.textContent)
 			errorAlert.textContent = message;
 		setTimeout(_=>{
@@ -770,12 +715,10 @@ window.addEventListener('DOMContentLoaded', _=>{
 	}
 
 	function fuckingParse(...date){
-		console.log(new Date(...date).toLocaleDateString('en', options), date)
 		return Date.parse(new Date(...date).toLocaleDateString('en', options))
 	}
 
 	function limitInputs(el, max){
-		console.log('x')
 		let val = Number(el.value)
 		if(val > max){
 			el.value = max
