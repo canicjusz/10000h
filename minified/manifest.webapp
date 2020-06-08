@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "name": "10k rule",
+  "name": "10000h",
   "subtitle": "Strengthen your skills with 10000 hours rule!",
   "description": "Create new skills, add records and review your progress within week, month, year or all of your journey!",
   "categories": ["utilites", "life style"],
@@ -8,8 +8,8 @@
   "launch_path": "/index.html",
   "cursor": false,
   "icons": {
-    "60": "",
-    "128": ""
+    "60": "/img/icons/10000h_56.png",
+    "128": "/img/icons/10000h_112.png"
   },
   "developer": {
     "name": "Jan Michalak",
@@ -17,7 +17,7 @@
   },
   "locales": {
     "en-US": {
-       "name": "10k rule",
+       "name": "10000h",
        "subtitle": "Strengthen your skills with 10000 hours rule!",
        "description": "Create new skills, add records and review your progress within week, month, year or all of your journey!"
     }
